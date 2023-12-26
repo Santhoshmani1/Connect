@@ -1,0 +1,16 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&family=Poppins&family=Roboto&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.input-style {
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 5px;
+    border: 1px solid #1c1111;
+    margin-left: 12px;
+    margin-bottom: 6px;
+  }
