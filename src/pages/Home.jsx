@@ -34,7 +34,7 @@ const Home = () => {
               Discover the best hackathons from around the world. Work on
               Projects that makes a difference and Showcase your skills.
               <button className="p-2.5 m-2 bg-yellow-500 text-white rounded-xl hover:bg-black font-semibold leading-loose">
-                <a href="/hackathons"> Explore Hackathons </a>
+                <Link to="/hackathons"> Explore Hackathons </Link>
               </button>
             </div>
             <div className="hackathons-img">

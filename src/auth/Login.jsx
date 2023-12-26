@@ -22,7 +22,6 @@ const Login = () => {
           localStorage.setItem("userId", result.userStatus[0]._id);
         }
       })
-      .then(() => (window.location.href = "/profile"))
       .catch((err) => {
         console.log(err);
       });
@@ -114,6 +113,8 @@ const Login = () => {
           </div>
         </section>
       </div>
+
+
     </div>
   );
 };

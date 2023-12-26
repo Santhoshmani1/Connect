@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import ProfileCard from "../components/ProfileCard";
+import SignupPrompt from "../components/SignupPrompt";
 
 const Profile = () => {
   const [userDetails, setUserDetails] = useState("");
   const userId = localStorage.getItem("userId");
-  if (userId === null) {
-    window.location.href = "/signup";
-  }
+  
 
   async function getUserDetails(userId) {
     await fetch(`https://connect-api.up.railway.app/user/${userId}`)
@@ -23,8 +22,14 @@ const Profile = () => {
   }, [userId]);
 
   return (
+    
     <div>
-      <ProfileCard userDetails={userDetails} userId={userId} />
+      {!userId && (
+        <SignupPrompt />
+      )}
+      {userId && (
+        <ProfileCard userDetails={userDetails} userId={userId} />
+      )}
     </div>
   );
 };
