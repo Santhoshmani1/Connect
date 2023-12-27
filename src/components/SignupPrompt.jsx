@@ -4,7 +4,7 @@ const SignupPrompt = () => {
   return (
     <>
     <Header />
-      <div className="prompt-to-sign-container w-4/5 mx-auto h-screen p-10">
+      <div className="prompt-to-sign-container w-4/5 mx-auto h-screen px-10 py-40">
         <h2 className="text-4xl text-center font-bold p-10 border rounded-xl bg-gray-100 text-red-500">Sign up and get started</h2>
 
         <h3 className="text-xl text-center font-semibold p-2"></h3>
