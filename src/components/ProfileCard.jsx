@@ -78,7 +78,6 @@ const ProfileCard = ({ userDetails, userId }) => {
     twitter,
     about,
     skills,
-    projects,
     profilePic,
   } = updatedUserDetails;
   return (
@@ -90,6 +89,24 @@ const ProfileCard = ({ userDetails, userId }) => {
           <h2 className="text-4xl text-center font-semibold my-2">
             My Profile
           </h2>
+          {editMode ? (
+            <button
+              onClick={handleSave}
+              className="p-2 border bg-black text-white rounded m-2 hover:bg-blue-600 absolute right-5 opacity-70 hover:opacity-100"
+            >
+              Save
+            </button>
+          ) : (
+            <button
+              onClick={handleEdit}
+              className="p-2 border bg-black text-white rounded mx-1 absolute right-5 opacity-70 hover:opacity-100 text-sm text-center"
+            >
+              Edit{" "}
+              <span className="material-icons px-2 text-center text-sm">
+                edit
+              </span>
+            </button>
+          )}
           <div className="profile-image">
             {profilePic ? (
               <img
@@ -101,9 +118,9 @@ const ProfileCard = ({ userDetails, userId }) => {
               />
             ) : (
               <div
-                className="px-8 py-2 m-auto text-center rounded-3xl w-1/2 lg:w-1/3"
+                className="px-8 py-3 my-3 mx-auto text-center rounded-3xl w-1/2 lg:w-1/3"
                 style={{
-                  fontSize: "8rem",
+                  fontSize: "3rem",
                   color: "blue",
                   border: "2px solid black",
                 }}
@@ -113,24 +130,7 @@ const ProfileCard = ({ userDetails, userId }) => {
             )}
           </div>
 
-          {editMode ? (
-            <button
-              onClick={handleSave}
-              className="p-2 border bg-black text-white rounded m-2 hover:bg-blue-600 absolute right-5 opacity-70 hover:opacity-100"
-            >
-              Save
-            </button>
-          ) : (
-            <button
-              onClick={handleEdit}
-              className="p-2 border bg-black text-white rounded mx-1 absolute right-10 opacity-70 hover:opacity-100 text-sm text-center"
-            >
-              Edit{" "}
-              <span className="material-icons px-2 text-center text-sm">
-                edit
-              </span>
-            </button>
-          )}
+          
 
           <div className="primary-information">
             <div className="user-name text-2xl leading-tight p-2">
@@ -144,7 +144,7 @@ const ProfileCard = ({ userDetails, userId }) => {
                 />
               ) : (
                 <h2
-                  className="text-xl leading-loose text-center px-2 font-semibold"
+                  className="text-lg leading-loose text-center p-2 font-semibold"
                   style={{ fontFamily: "Poppins,Ariel,serif" }}
                 >
                   {name}
@@ -203,21 +203,21 @@ const ProfileCard = ({ userDetails, userId }) => {
                   </div>
                 </div>
 
-                <div className="skills-container  flex justify-center flex-wrap items-center">
+                <div className="skills-container sm:grid sm:grid-cols-2 md:grid-cols-3 text-center mx-auto flex flex-col">
                   {updatedSkills.map((skill, index) => (
                     <div
                       key={index}
-                      className="flex-col flex justify-center items-center"
+                      className="text-center mx-auto"
                     >
-                      <div className="p-4 m-2 border bg-blue-600 text-white rounded-xl flex justify-evenly items-center">
-                        <div> {skill} </div>
+                      <div className="p-2 m-2 border bg-blue-600 text-white rounded-xl flex justify-center items-center">
+                        <div className="text-sm"> {skill} </div>
                         <div>
                           {" "}
                           <button
                             onClick={() => handleDeleteSkill(skill)}
-                            className="text-center "
+                          className="text-center"
                           >
-                            <div className="material-icons hover:text-red-200 my-2 mx-1">
+                            <div className="material-icons hover:text-red-200 my-1 mx-1">
                               cancel
                             </div>
                           </button>
@@ -228,7 +228,7 @@ const ProfileCard = ({ userDetails, userId }) => {
                 </div>
               </>
             ) : (
-              <div className="user-skills-container grid grid-cols-2 md:grid-cols-3 text-center mx-auto">
+              <div className="user-skills-container sm:grid sm:grid-cols-2 md:grid-cols-3 text-center mx-auto flex flex-col">
                 {updatedSkills.map((skill, index) => (
                   <div
                     key={index}
@@ -241,7 +241,7 @@ const ProfileCard = ({ userDetails, userId }) => {
             )}
           </div>
 
-          <div className="contact-information">
+          <div className="contact-information flex justify-center items-center">
             <div className="socials-container md:flex md:flex-col justify-center items-center sm:flex-col">
               <h2 className="text-xl text-center p-2 ">Social Handles</h2>
               <div className="socials md:flex md:flex-col">
@@ -253,7 +253,7 @@ const ProfileCard = ({ userDetails, userId }) => {
                       </h2>
                     </div>
                     <label htmlFor="github">
-                      <div className="flex justify-center items-center">
+                      <div className="flex justify-center items-center flex-col">
                         <div className="icon">
                           <span
                             className="text-center "
@@ -269,7 +269,7 @@ const ProfileCard = ({ userDetails, userId }) => {
                             id="github"
                             value={github}
                             onChange={handleChange}
-                            className="p-2 m-2 border-2 border-black rounded-md"
+                            className="p-2 m-2 border-2 border-black rounded-md text-sm"
                           />
                         </div>
                       </div>
@@ -277,7 +277,7 @@ const ProfileCard = ({ userDetails, userId }) => {
                   </>
                 ) : (
                   github && (
-                    <div className="flex justify-start items-center text-sm">
+                    <div className="flex justify-start items-center">
                       <Link to={github}>
                         <FaGithub
                           className="p-2"
@@ -298,7 +298,7 @@ const ProfileCard = ({ userDetails, userId }) => {
 
                 {editMode ? (
                   <label htmlFor="linkedin">
-                    <div className="flex justify-start items-center">
+                    <div className="flex justify-start items-center flex-col">
                       <div className="icon">
                         <span style={{ fontSize: "2rem" }}>
                           <FaLinkedin style={{ color: "#069" }} />
@@ -311,7 +311,7 @@ const ProfileCard = ({ userDetails, userId }) => {
                           id="linkedin"
                           value={linkedin}
                           onChange={handleChange}
-                          className="p-2 m-2 border-black rounded-md border-2"
+                          className="p-2 m-2 border-black rounded-md border-2 text-sm"
                         />
                       </div>
                     </div>
@@ -341,7 +341,7 @@ const ProfileCard = ({ userDetails, userId }) => {
 
                 {editMode ? (
                   <label htmlFor="twitter">
-                    <div className="flex justify-center items-center">
+                    <div className="flex justify-center items-center flex-col">
                       <div className="icon">
                         <span style={{ fontSize: "2rem", color: "#069aed" }}>
                           <FaTwitter />
@@ -354,7 +354,7 @@ const ProfileCard = ({ userDetails, userId }) => {
                           id="twitter"
                           value={twitter}
                           onChange={handleChange}
-                          className="p-2 mx-2 my-2 border-black rounded-md border-2 hover:border-blue-600"
+                          className="p-2 mx-2 my-2 border-black rounded-md border-2  text-sm"
                         />
                       </div>
                     </div>
@@ -378,11 +378,11 @@ const ProfileCard = ({ userDetails, userId }) => {
             </div>
           </div>
 
-          <div className="log-out w-1/2 mx-auto my-20 flex justify-center items-center">
+          <div className="log-out mx-auto my-20 flex justify-center items-center">
             {!editMode && (
               <button
                 onClick={handleLogOut}
-                className="p-2 border bg-gray-500 text-white rounded-xl m-2 w-1/2 hover:bg-gray-700 hover:border-white mx-auto"
+                className="px-4 py-2 border bg-gray-500 text-white rounded-xl m-2 w-1/2 hover:bg-gray-700 hover:border-white mx-auto"
               >
                 Log out
               </button>
