@@ -16,9 +16,10 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [signupError, setSignupError] = useState("");
 
   async function registerUser(data) {
-    await fetch("https://connect-api.up.railway.app/signup", {
+    await fetch("https://connect-api.up.railway.app/user/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,12 +30,15 @@ const SignUp = () => {
       .then((result) => {
         console.log(result);
         if (result.message == "success") {
-          localStorage.setItem("userId", result.userId);
-          console.log(result.userId);
-          document.location.href = "/profile";
+          console.log(result);
+          document.cookie = `token=${result.accessToken}`;
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setSignupError("Unable to Signup");
+        console.log(signupError);
+      });
   }
 
   function handleSignup(e) {
@@ -125,7 +129,7 @@ const SignUp = () => {
                   </div>
                   <button
                     type="submit"
-                    className="w-fullbg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm text-center bg-blue-600 text-white hover:bg-blue-700 px-10 py-3 mx-30 lg:mx-35"
+                    className="w-full bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm text-center bg-blue-600 text-white hover:bg-blue-700 px-10 py-3 mx-30 lg:mx-35"
                   >
                     Signup
                   </button>
@@ -137,7 +141,7 @@ const SignUp = () => {
                           className=""
                           style={{ fontFamily: "sans-serif" }}
                         >
-                          {error}
+                          <li className="text-zinc-600">{error}</li>
                         </div>
                       ))}
                   </div>

@@ -1,10 +1,11 @@
 import { useContext, useState } from "react";
 import Header from "./shared/Header";
-import "../../src/index.css"
+import "../../src/index.css";
 import UserContext from "../context/userProvider";
+import { getCookieValue } from "../helpers/getCookie";
+
 const NewTeam = () => {
   const user = useContext(UserContext);
-  const userId = localStorage.getItem("userId");
   const [team, setTeam] = useState({
     name: "",
     teamSize: 0,
@@ -13,16 +14,14 @@ const NewTeam = () => {
     positions: [],
     hackathonName: "",
     authorId: "",
-    authorName:"",
+    authorName: "",
     postedDate: new Date(),
     expires: new Date(),
     teamDescription: "",
     projectDescription: "",
     coverImg: "",
-    userName : user?.name,
-    userId : userId,
+    userName: user?.name,
   });
-
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -77,12 +76,13 @@ const NewTeam = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("https://connect-api.up.railway.app/newTeam", {
+    fetch("https://connect-api.up.railway.app/teams", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "authorization" : "Bearer " + getCookieValue("token")
       },
-      body: JSON.stringify({ team: team, userId: userId }),
+      body: JSON.stringify({ team: team }),
     })
       .then((res) => res.json())
       .then((res) => console.log(res))
@@ -232,7 +232,7 @@ const NewTeam = () => {
             <div className="hackathon-details-wrappper lg:flex lg:justify-evenly lg:items-center w-screen"></div>
             <div className="flex justify-center items-center p-2">
               <label className="text-center font-semibold mx-2 w-screen">
-                Tell about your team 
+                Tell about your team
                 <textarea
                   name="teamDescription"
                   value={team.teamDescription}

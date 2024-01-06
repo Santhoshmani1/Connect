@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
 import Header from "./shared/Header";
 import { Link } from "react-router-dom";
+import { getCookieValue } from "../helpers/getCookie";
 
 const ProfileCard = ({ userDetails, userId }) => {
   const [editMode, setEditMode] = useState(false);
@@ -10,10 +11,11 @@ const ProfileCard = ({ userDetails, userId }) => {
   const [updatedSkills, setUpdatedSkills] = useState(userDetails.skills || []);
 
   function updateUserDetailsinDB() {
-    fetch(`https://connect-api.up.railway.app/userUpdate`, {
-      method: "POST",
+    fetch(`https://connect-api.up.railway.app/user`, {
+      method: "put",
       headers: {
         "Content-Type": "application/json",
+        "authorization" : "Bearer " + getCookieValue("token")
       },
       body: JSON.stringify({ updatedUserDetails, userId: userId }),
     })

@@ -1,20 +1,25 @@
 import { useEffect, useState } from "react";
 import Header from "./shared/Header";
 import { Link } from "react-router-dom";
+import { getCookieValue } from "../helpers/getCookie";
 
 const MyOpportunities = () => {
   const [teams, setTeams] = useState([]);
-  const userId = localStorage.getItem("userId");
-
+  const token = getCookieValue("token");
   useEffect(() => {
-    fetch(`https://connect-api.up.railway.app/user/myTeams/${userId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setTeams(data);
-      })
-      .catch((err) => console.log(err));
-  }, [userId]);
+    fetch(`https://connect-api.up.railway.app/teams/myteams` , {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      setTeams(data);
+    })
+    .catch((err) => console.log(err))
+  },[token]);
 
   return (
     <div>

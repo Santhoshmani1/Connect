@@ -7,7 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   async function loginUser(data) {
-    fetch("https://connect-api.up.railway.app/login", {
+    fetch("https://connect-api.up.railway.app/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,7 +19,8 @@ const Login = () => {
         console.log(result);
         if (result.message == "success") {
           console.log(result);
-          localStorage.setItem("userId", result.userStatus[0]._id);
+          localStorage.setItem("userId", result.userStatus._id);
+          document.cookie = `token=${result.accessToken}`;
         }
       })
       .catch((err) => {
@@ -38,7 +39,7 @@ const Login = () => {
       <div>
         <section className="bg-gray-50">
           <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
+            <div className="w-full bg-white rounded-lg shadow-lg shadow-blue-200 dark:border md:mt-0 sm:max-w-md xl:p-0 ">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h2
                   className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-center"
@@ -94,7 +95,7 @@ const Login = () => {
                   </div>
                   <button
                     type="submit"
-                    className="w-fullbg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm text-center bg-blue-600 text-white hover:bg-blue-700 px-10 py-3 mx-30 lg:mx-35"
+                    className="w-full bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm text-center bg-blue-600 text-white hover:bg-blue-700 px-10 py-3 mx-30 lg:mx-35"
                   >
                     Login
                   </button>

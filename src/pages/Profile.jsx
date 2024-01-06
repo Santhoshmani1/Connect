@@ -1,33 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import ProfileCard from "../components/ProfileCard";
 import SignupPrompt from "../components/SignupPrompt";
+import UserContext from "../context/context";
+import { getCookieValue } from "../helpers/getCookie";
 
 const Profile = () => {
-  const [userDetails, setUserDetails] = useState("");
+  const accessToken = getCookieValue("token");
   const userId = localStorage.getItem("userId");
-  
-
-  async function getUserDetails(userId) {
-    await fetch(`https://connect-api.up.railway.app/user/${userId}`)
-      .then((res) => res.json())
-      .then((res) => {
-        setUserDetails(res.userDetails);
-      })
-      .catch((err) => console.log(err));
-  }
-  console.log(userDetails);
-
-  useEffect(() => {
-    getUserDetails(userId);
-  }, [userId]);
+  const userDetails = useContext(UserContext) || {};
 
   return (
     
     <div>
-      {!userId && (
+      {!accessToken && (
         <SignupPrompt />
       )}
-      {userId && (
+      {accessToken && (
         <ProfileCard userDetails={userDetails} userId={userId} />
       )}
     </div>

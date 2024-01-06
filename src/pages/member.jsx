@@ -5,7 +5,6 @@ import UserProfile from "../components/UserProfile";
 const User = () => {
   const [user, setUser] = useState({});
   const userId = useParams().id;
-  console.log(userId);
   useEffect(() => {
     fetch(`https://connect-api.up.railway.app/member/${userId}`)
       .then((res) => res.json())
@@ -18,7 +17,7 @@ const User = () => {
 
   return (
     <>
-    <UserProfile userDetails={user}  />
+      <UserProfile userDetails={user} />
     </>
   );
 };
