@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
+import { getCookieValue } from "../helpers/getCookie";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../firebase/Config";
+
 import Header from "./shared/Header";
 import { Link } from "react-router-dom";
-import { getCookieValue } from "../helpers/getCookie";
+import { FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
 
 const ProfileCard = ({ userDetails, userId }) => {
   const [editMode, setEditMode] = useState(false);
@@ -15,7 +18,7 @@ const ProfileCard = ({ userDetails, userId }) => {
       method: "put",
       headers: {
         "Content-Type": "application/json",
-        "authorization" : "Bearer " + getCookieValue("token")
+        authorization: "Bearer " + getCookieValue("token"),
       },
       body: JSON.stringify({ updatedUserDetails, userId: userId }),
     })
@@ -50,6 +53,7 @@ const ProfileCard = ({ userDetails, userId }) => {
 
   useEffect(() => {
     setUpdatedUserDetails(userDetails);
+    console.log(userDetails.profilePic);
   }, [userDetails]);
 
   const handleLogOut = () => {
@@ -73,19 +77,41 @@ const ProfileCard = ({ userDetails, userId }) => {
       [e.target.name]: e.target.value,
     });
   };
-  const {
-    name,
-    linkedin,
-    github,
-    twitter,
-    about,
-    skills,
-    profilePic,
-  } = updatedUserDetails;
+
+  function uploadFile(file) {
+    console.log(file.name);
+    const storageRef = ref(storage, `profilePics/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(`Upload is ${progress}% done`);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setUpdatedUserDetails({
+            ...updatedUserDetails,
+            profilePic: downloadURL,
+          });
+        });
+      }
+    );
+  }
+
+  const { name, linkedin, github, twitter, about, skills, profilePic } =
+    updatedUserDetails;
   return (
     <div>
       <Header />
-      <Link to="/Profile/myTeams"><button>my teams</button></Link>
+      <Link to="/Profile/myTeams">
+        <button>my teams</button>
+      </Link>
       <div className="flex justify-center" id="profile-bg">
         <div className="user-profile-container absolute lg:mt-20 overflow-x-hidden w-4/5 mx-auto px-10 py-4">
           <h2 className="text-4xl text-center font-semibold my-2">
@@ -109,30 +135,47 @@ const ProfileCard = ({ userDetails, userId }) => {
               </span>
             </button>
           )}
-          <div className="profile-image">
-            {profilePic ? (
+          {editMode ? (
+            <>
+            <div className="preview-">
               <img
                 src={profilePic}
                 alt="profile-picture"
                 width={"200px"}
                 height={"200px"}
-                className="bg-gray-50 border rounded-lg mx-5"
+                className="bg-gray-50 border rounded-lg mx-auto"
               />
-            ) : (
-              <div
-                className="px-8 py-3 my-3 mx-auto text-center rounded-3xl w-1/2 lg:w-1/3"
-                style={{
-                  fontSize: "3rem",
-                  color: "blue",
-                  border: "2px solid black",
-                }}
-              >
-                {String(name)[0]}
-              </div>
-            )}
-          </div>
-
-          
+            </div>
+              <input
+                type="file"
+                name="profilePic"
+                onChange={(e) => uploadFile(e.target.files[0])}
+              />
+            </>
+          ) : (
+            <div className="profile-image p-4">
+              {profilePic ? (
+                <img
+                  src={profilePic}
+                  alt="profile-picture"
+                  width={"200px"}
+                  height={"200px"}
+                  className="bg-gray-50 border rounded-lg mx-auto"
+                />
+              ) : (
+                <div
+                  className="px-8 py-3 my-3 mx-auto text-center rounded-3xl w-1/2 lg:w-1/3"
+                  style={{
+                    fontSize: "3rem",
+                    color: "blue",
+                    border: "2px solid black",
+                  }}
+                >
+                  {String(name)[0]}
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="primary-information">
             <div className="user-name text-2xl leading-tight p-2">
@@ -207,17 +250,14 @@ const ProfileCard = ({ userDetails, userId }) => {
 
                 <div className="skills-container sm:grid sm:grid-cols-2 md:grid-cols-3 text-center mx-auto flex flex-col">
                   {updatedSkills.map((skill, index) => (
-                    <div
-                      key={index}
-                      className="text-center mx-auto"
-                    >
+                    <div key={index} className="text-center mx-auto">
                       <div className="p-2 m-2 border bg-blue-600 text-white rounded-xl flex justify-center items-center">
                         <div className="text-sm"> {skill} </div>
                         <div>
                           {" "}
                           <button
                             onClick={() => handleDeleteSkill(skill)}
-                          className="text-center"
+                            className="text-center"
                           >
                             <div className="material-icons hover:text-red-200 my-1 mx-1">
                               cancel
