@@ -15,7 +15,7 @@ const Header = () => {
           <h1
             className="text-4xl leading-tight font-bold p-2 text-black lg:text-5xl"
             style={{
-              fontFamily: "Poppins,Ariel,sans-serif",
+              fontFamily: "Open sans,Ariel,sans-serif",
               letterSpacing: "0.4px",
             }}
           >
@@ -24,7 +24,7 @@ const Header = () => {
         </Link>
         <nav className="lg:flex overflow-x-hidden">
           <ul
-            className="navigation-items flex items-center justify-evenly bottom-0 left-0 lg:pb-0 pb-1 fixed w-screen pt-1 shadow-sm border lg:w-1/5 lg:relative lg:right-0 lg:left-40 lg:shadow-none lg:border-none sm:fixed bg-slate-50"
+            className="navigation-items flex items-center justify-evenly bottom-0 left-0 lg:pb-0 fixed w-screen pt-1 lg:w-1/5 lg:relative lg:right-0 lg:left-40 lg:shadow-none lg:border-none sm:fixed bg-sky-50 lg:bg-gray-50 border-black "
             style={{ zIndex: "100" }}
           >
             {navItems.map((item) => (
@@ -36,7 +36,7 @@ const Header = () => {
                   to={item.path}
                   className="sm:flex-col items-center justify-center lg:flex lg:justify-evenly lg:p-2 hover:text-blue-600"
                 >
-                  <div className="text-center lg:inline-block">
+                  <div className="text-center lg:inline-block px-2">
                     <span className="material-icons">{item.icon}</span>
                   </div>
                   <span
