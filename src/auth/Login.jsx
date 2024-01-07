@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Header from "../components/shared/Header";
 import { useState } from "react";
+import { setAccessTokenCookie } from "../helpers/cookiehelpers.js";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,8 +20,8 @@ const Login = () => {
         console.log(result);
         if (result.message == "success") {
           console.log(result);
-          localStorage.setItem("userId", result.userStatus._id);
-          document.cookie = `token=${result.accessToken}`;
+          setAccessTokenCookie(result.accessToken);
+          document.location.href = "/account";
         }
       })
       .catch((err) => {
@@ -114,8 +115,6 @@ const Login = () => {
           </div>
         </section>
       </div>
-
-
     </div>
   );
 };

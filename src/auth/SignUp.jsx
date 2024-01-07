@@ -2,12 +2,17 @@ import { Link } from "react-router-dom";
 import Header from "../components/shared/Header";
 import handleFormValues from "./validation";
 import { useState } from "react";
+import {
+  getCookieValue,
+  setAccessTokenCookie,
+} from "../helpers/cookiehelpers.js";
 
 const SignUp = () => {
   function checkUserStatus() {
+    const token = getCookieValue("token");
     const userId = localStorage.getItem("userId");
-    if (userId != null) {
-      document.location.href = "/profile";
+    if (token && userId) {
+      document.location.href = "/account";
     }
   }
   checkUserStatus();
@@ -30,8 +35,8 @@ const SignUp = () => {
       .then((result) => {
         console.log(result);
         if (result.message == "success") {
-          console.log(result);
-          document.cookie = `token=${result.accessToken}`;
+          setAccessTokenCookie(result.accessToken);
+          document.location.href = "/account";
         }
       })
       .catch((err) => {
