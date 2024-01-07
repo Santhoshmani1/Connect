@@ -4,7 +4,7 @@ const navItems = [
   { name: "Home", path: "/", icon: "home" },
   { name: "Teams", path: "/teams", icon: "group_add" },
   { name: "Hackathons", path: "/hackathons", icon: "emoji_events" },
-  { name: "Profile", path: "/profile", icon: "account_circle" },
+  { name: "Account", path: "/account", icon: "account_circle" },
 ];
 
 const Header = () => {

@@ -30,8 +30,8 @@ const Hackathons = () => {
       <Header />
       <div className="hackathons-container lg:pt-20 pb-20 w-screen mx-auto">
         <h2
-          className="text-2xl font-bold text-center p-2"
-          style={{ fontFamily: "Montserrat,Ariel,serif" }}
+          className="text-3xl font-bold text-center p-2"
+          style={{ fontFamily: "Open sans,Ariel,serif" }}
         >
           Hackathons
         </h2>
@@ -44,7 +44,7 @@ const Hackathons = () => {
           {hackathons.map((hackathon, index) => {
             return (
               <div
-                className="hackathon-card flex-col justify-center items-center w-4/5 lg:w-1/2 m-2 border-2 rounded-lg p-2.5 shadow-lg mx-auto"
+                className="hackathon-card flex-col justify-center items-center lg:w-1/2 m-2 border-1 border-black rounded-lg p-2.5 mx-auto"
                 key={index}
                 id={hackathon._id}
                 style={{ fontFamily: "Poppins,serif" }}
@@ -53,7 +53,7 @@ const Hackathons = () => {
                   {" "}
                   <h2
                     className="p-4 text-2xl font-semibold leading-tight text-center hover:underline"
-                    style={{ fontFamily: "Montserrat,Ariel,serif" }}
+                    style={{ fontFamily: "Open sans,Ariel,serif" }}
                   >
                     {hackathon.name}
                   </h2>

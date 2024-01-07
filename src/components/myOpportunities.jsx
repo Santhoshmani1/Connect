@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "./shared/Header";
 import { Link } from "react-router-dom";
-import { getCookieValue } from "../helpers/getCookie";
+import { getCookieValue } from "../helpers/cookiehelpers.js";
 
 const MyOpportunities = () => {
   const [teams, setTeams] = useState([]);

@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import Header from "./shared/Header";
 import "../../src/index.css";
 import UserContext from "../context/userProvider";
-import { getCookieValue } from "../helpers/getCookie";
+import { getCookieValue } from "../helpers/cookiehelpers.js";
 
 const NewTeam = () => {
   const user = useContext(UserContext);
@@ -91,10 +91,10 @@ const NewTeam = () => {
   return (
     <>
       <Header />
-      <div className="new-team-container lg:pt-20 pb-20 z-10">
+      <div className="new-team-container lg:pt-20 pb-20 z-10" style={{fontFamily:"Open sans,ariel"}}>
         <form onSubmit={handleSubmit}>
           <section className="team-details">
-            <h3 className="py-4 mx-4 my-2 text-center font-sans text-2xl">
+            <h3 className="py-4 mx-4 my-2 text-center  text-2xl font-bold">
               A Great team brings a great story, Tell about your team
             </h3>
             <div className="grid md:grid-cols-1 grid-cols-1 gap-3 justify-items-center">
@@ -226,12 +226,12 @@ const NewTeam = () => {
             </ul>
           </section>
           <section className="event-details">
-            <h3 className="py-4 text-center text-2xl  font-sans">
+            <h3 className="py-4 text-center text-2xl  font-bold">
               Tell about the hackathon you are participating in
             </h3>
             <div className="hackathon-details-wrappper lg:flex lg:justify-evenly lg:items-center w-screen"></div>
             <div className="flex justify-center items-center p-2">
-              <label className="text-center font-semibold mx-2 w-screen">
+              <label className="text-center mx-2 w-screen">
                 Tell about your team
                 <textarea
                   name="teamDescription"
@@ -242,7 +242,7 @@ const NewTeam = () => {
               </label>
             </div>
             <div className="flex justify-center items-center p-2 mx-auto">
-              <label className="text-center font-semibold w-screen">
+              <label className="text-center w-screen">
                 What Project You are Working on ?
                 <textarea
                   name="projectDescription"

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { getCookieValue } from "../helpers/getCookie";
+import { getCookieValue } from "../helpers/cookiehelpers.js";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase/Config";
 
@@ -58,6 +58,7 @@ const ProfileCard = ({ userDetails, userId }) => {
 
   const handleLogOut = () => {
     localStorage.removeItem("userId");
+    document.cookie = "token" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     document.location.href = "/signup";
   };
 
@@ -109,9 +110,6 @@ const ProfileCard = ({ userDetails, userId }) => {
   return (
     <div>
       <Header />
-      <Link to="/Profile/myTeams">
-        <button>my teams</button>
-      </Link>
       <div className="flex justify-center" id="profile-bg">
         <div className="user-profile-container absolute lg:mt-20 overflow-x-hidden w-4/5 mx-auto px-10 py-4">
           <h2 className="text-4xl text-center font-semibold my-2">

@@ -3,7 +3,7 @@ import team from "../assets/team.png";
 import hackathon from "../assets/hackathon.png";
 import { Link } from "react-router-dom";
 import {FaGithub} from "react-icons/fa"
-import { getCookieValue } from "../helpers/cookiehelpers";
+import { getCookieValue } from "../helpers/cookiehelpers.js";
 
 const Home = () => {
   return (
